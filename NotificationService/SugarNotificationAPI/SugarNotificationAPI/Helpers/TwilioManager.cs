@@ -1,33 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using System.Configuration;
 using Twilio;
-using Twilio.AspNet.Mvc;
-using Twilio.TwiML;
 using Twilio.Rest.Api.V2010.Account;
+using Twilio.TwiML;
 
-namespace SugarNotificationAPI.Controllers
+namespace SugarNotificationAPI.Helpers
 {
-    public class SmsController : Controller
+    public class TwilioManager
     {
-        // GET: Sms
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult SendSms(string toNumber, string message)
+        public MessageResource SendSmsMessage(string userNumber, string messageBody)
         {
             string accountSid = ConfigurationManager.AppSettings["TwilioAccountSid"];
             string authToken = ConfigurationManager.AppSettings["TwilioAuthToken"];
-
             TwilioClient.Init(accountSid, authToken);
-
-            string userNumber = toNumber ?? "+17146750966";
-            string messageBody = message ?? "This is a test message";
 
             var toUserNumber = new Twilio.Types.PhoneNumber(userNumber);
             var fromAppNumber = ConfigurationManager.AppSettings["TwilioPhoneNumber"];
@@ -38,7 +26,14 @@ namespace SugarNotificationAPI.Controllers
                 body: messageBody
             );
 
-            return Content(messageResource.Sid);
+            return messageResource;
+        }
+
+        public MessagingResponse SendTwimlSmsMessage(string userName, string Body)
+        {
+            var twiml = new MessagingResponse();
+            var messageResponse = twiml.Message($"Hey {userName}! {Body}");
+            return messageResponse;
         }
     }
 }
