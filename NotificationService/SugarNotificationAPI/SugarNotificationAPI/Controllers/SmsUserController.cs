@@ -1,4 +1,5 @@
 ﻿using SugarNotificationAPI.Helpers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Twilio.AspNet.Mvc;
 using Twilio.TwiML;
@@ -9,38 +10,35 @@ namespace SugarNotificationAPI.Controllers
     {
         // POST: SmsUser/RecieveMessage
         [HttpPost]
-        public ActionResult RecieveMessage(string From, string Body)
+        public async Task<ActionResult> RecieveMessage(string From, string Body)
         {
             var userManager = new UserManager();
             var twilioManager = new TwilioManager();
 
-            //Future Call TODO:
-            //var user = userManager.GetUserByPhoneNumberAsync(From);
-            var userName = "Tang";
+            var user = await userManager.GetUserByPhoneNumberAsync(From);
 
             switch (Body.ToUpper())
             {
                 case "VERIFY":
                     {
-                        //TODO:
-                        //await userManager.VerifyPhoneNumber(From);
-                        var messageResponse = twilioManager.SendTwimlSmsMessage(userName, "You are verified.");
+                        await userManager.VerifyPhoneNumber(From);
+                        var messageResponse = twilioManager.SendTwimlSmsMessage(user.UserName, "You are verified.");
                         return TwiML(messageResponse);
                     }
                 case "CONFIRM":
                     {
-                        //TODO:
-                        //await var user = userManager.GetUserByPhoneNumberAsync(From);
-                        //await var user = userManager.GetProducerForAcceptedRequestByConsumerPhoneNumber(From);
-                        var producerName = "Jennifer";
+                        var userProducerTask = await userManager.GetProducerForAcceptedRequestByConsumerPhoneNumber(From);
+                        var producerUser = userProducerTask;
+                        await userManager.ConfirmMeeting(user.PhoneNumber, producerUser.PhoneNumber);
+
+                        var producerName = producerUser.UserName ?? "Jennifer";
                         var messageResponse = twilioManager.SendTwimlSmsMessage("We let " + producerName + " know. Glad it worked out!");
                         return TwiML(messageResponse);
                     }
                 case "CHANGE":
                     {
                         //TODO:
-                        //await var user = userManager.GetUserByPhoneNumberAsync(From);
-                        //await var activeRequest = userManager.GetActiveAcceptedRequestByConsumerPhoneNumber(From);
+                        //await var activeRequest = userManager.GetActiveAcceptedRequestByConsumerPhoneNumber(user.PhoneNumber);
                         var requestUrl = "shugarapp.com/requestId";
                         var producerName = "Jennifer";
                         var messageResponse = twilioManager.SendTwimlSmsMessage(
@@ -50,7 +48,7 @@ namespace SugarNotificationAPI.Controllers
                 default:
                     {
                         var twiml = new MessagingResponse();
-                        var message = twiml.Message($"Hello {userName}! You said {Body}.");
+                        var message = twiml.Message($"Hello {user.UserName}! You said {Body}.");
                         return TwiML(message);
                     }
             }

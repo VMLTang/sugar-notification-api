@@ -41,6 +41,47 @@ namespace SugarNotificationAPI.Controllers
             return Content(messageResource.Sid);
         }
 
+        // POST: SmsServer/MeetingConfirm
+        [HttpPost]
+        public ActionResult MeetingConfirm(MeetingConfirmModel request)
+        {
+            var twilioManager = new TwilioManager();
+
+            if(request.Type.ToUpper() == "OFFER")
+            {
+                twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                "Great news! " + request.ConsumerName +
+                " accepted your offer. To pick up, meet at " + request.Time + " at " + request.Location +
+                ".");
+
+                twilioManager.SendSmsMessage(request.ConsumerPhoneNumber,
+                request.ProducerName + " has confirmed and will see you at " + request.Time + " at " + request.Location + ".");
+            }
+            else
+            {
+                twilioManager.SendSmsMessage(request.ConsumerPhoneNumber,
+                "Great news! " + request.ProducerName +
+                " accepted your request. To pick up, meet at " + request.Time + " at " + request.Location +
+                ".");
+
+                twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                request.ConsumerName + " has confirmed and will see you at " + request.Time + " at " + request.Location + ".");     
+            }
+
+            return Content(request.Type.ToUpper() + " Confirmed");
+        }
+
+        // POST: SmsServer/ProducerMeetupConfirmed
+        [HttpPost]
+        public ActionResult ProducerMeetupConfirmed(ProducerMeetupConfirmedModel request)
+        {
+            var twilioManager = new TwilioManager();
+            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                request.ConsumerName + " has confirmed and will see you at " + request.Time + " at " + request.Place + ".");
+
+            return Content(messageResource.Sid);
+        }
+
         // POST: SmsServer/ConsumerRequestAccepted
         [HttpPost]
         public ActionResult ConsumerRequestAccepted(ConsumerRequestAcceptedModel request)
@@ -61,17 +102,6 @@ namespace SugarNotificationAPI.Controllers
             var twilioManager = new TwilioManager();
             var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
                 request.ConsumerName + " would like to revise the meet up. Click here to view and confirm: " + request.RequestUrl);
-
-            return Content(messageResource.Sid);
-        }
-
-        // POST: SmsServer/ProducerMeetupConfirmed
-        [HttpPost]
-        public ActionResult ProducerMeetupConfirmed(ProducerMeetupConfirmedModel request)
-        {
-            var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
-                request.ConsumerName + " has confirmed and will see you at " + request.Time + " at " + request.Place + ".");
 
             return Content(messageResource.Sid);
         }

@@ -1,5 +1,8 @@
-﻿using SugarNotificationAPI.VoiceModels;
+﻿using SugarNotificationAPI.Helpers;
+using SugarNotificationAPI.Models;
+using SugarNotificationAPI.VoiceModels;
 using System;
+using System.Threading.Tasks;
 
 namespace SugarNotificationAPI.Handlers
 {
@@ -31,6 +34,33 @@ namespace SugarNotificationAPI.Handlers
             }
         }
 
+        public static void CreateOfferInDatabase(string foodItem, string quantity)
+        {
+            UserManager dataManager = new UserManager();
+
+            var model = new CreateOfferModel()
+            {
+                type = "OFFER",
+                status = "PENDING",
+                createdBy = 8,
+                expiresAt = new DateTime(2018, 7, 23).ToString(),
+                content = new OfferContent()
+                {
+                    quantity = 2,
+                    item = foodItem,
+                    message = quantity + " " + foodItem
+                },
+                pickupLocation = new Location()
+                {
+                    lat = 37.09024,
+                    @long = -95.71289,
+                    description = "Briar Hill Apartments"
+                }
+            };
+
+            dataManager.CreateOffer(model).RunSynchronously();
+        }
+
         public static AlexaResponse CreateOfferIntentHandler(AlexaRequest request)
         {
             //Tell Sugar App I have {Quantity} of {FoodItem} to offer
@@ -38,15 +68,17 @@ namespace SugarNotificationAPI.Handlers
             //ALEXA Reprompt: Say help to hear a list of options
 
             var response = new AlexaResponse();
+            var foodItemString = "";
+            var quantityString = "";
 
             var quantity = request.Request.Intent.Slots["Quantity"].value;
             if (quantity != null)
-                quantity = request.Request.Intent.Slots["Quantity"].value.ToString();
+                quantityString = request.Request.Intent.Slots["Quantity"].value.ToString();
 
             var foodItem = request.Request.Intent.Slots["FoodItem"].value;
 
             if (foodItem != null)
-                foodItem = request.Request.Intent.Slots["FoodItem"].value.ToString();
+                foodItemString = request.Request.Intent.Slots["FoodItem"].value.ToString();
             else
             {
                 response.Response.OutputSpeech.Text = "Sure. What kind of food item are you offering?";
@@ -57,6 +89,8 @@ namespace SugarNotificationAPI.Handlers
 
                 return response;
             }
+
+            CreateOfferInDatabase(foodItemString, quantityString);
 
             //TODO: Call Data API and create offer posting
 

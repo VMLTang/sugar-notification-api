@@ -184,14 +184,19 @@
     <Compile Include="Handlers\RequestHandlers.cs" />
     <Compile Include="Helpers\TwilioManager.cs" />
     <Compile Include="Helpers\UserManager.cs" />
+    <Compile Include="Models\ActiveRequestModel.cs" />
     <Compile Include="Models\BroadcastRequestModel.cs" />
+    <Compile Include="Models\ConfirmMeetingModel.cs" />
     <Compile Include="Models\ConsumerOfferSelectedModel.cs" />
     <Compile Include="Models\ConsumerRequestAcceptedModel.cs" />
+    <Compile Include="Models\CreateOfferModel.cs" />
     <Compile Include="Models\GenericMessageModel.cs" />
+    <Compile Include="Models\MeetingConfirmModel.cs" />
     <Compile Include="Models\ProducerMeetupChangeRequestByConsumerModel.cs" />
     <Compile Include="Models\ProducerOfferSelectedModel.cs" />
     <Compile Include="Models\ProducerRequestAcceptedModel.cs" />
     <Compile Include="Models\ProucerMeetupConfirmedModel.cs" />
+    <Compile Include="Models\UserDataModel.cs" />
     <Compile Include="Models\VerifyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VoiceModels\AlexaRequest.cs" />
@@ -249,7 +254,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

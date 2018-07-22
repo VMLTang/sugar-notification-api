@@ -29,10 +29,10 @@ namespace SugarNotificationAPI.Handlers
                     response = IntentHandlers.HelloIntentHandler(request);
                     break;
                 case "CreateOfferIntent":
-                    response = IntentHandlers.AdditionalOfferIntentHandler(request);
+                    response = IntentHandlers.CreateOfferIntentHandler(request);
                     break;
                 case "AMAZON.YesIntent":
-                    response = IntentHandlers.CreateOfferIntentHandler(request);
+                    response = IntentHandlers.AdditionalOfferIntentHandler(request);
                     break;
                 case "AMAZON.NoIntent":
                     response = IntentHandlers.ConfirmOfferCreationIntentHandler(request);
