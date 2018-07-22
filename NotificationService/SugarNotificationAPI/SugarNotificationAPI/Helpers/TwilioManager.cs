@@ -29,6 +29,13 @@ namespace SugarNotificationAPI.Helpers
             return messageResource;
         }
 
+        public MessagingResponse SendTwimlSmsMessage(string Body)
+        {
+            var twiml = new MessagingResponse();
+            var messageResponse = twiml.Message($"{Body}");
+            return messageResponse;
+        }
+
         public MessagingResponse SendTwimlSmsMessage(string userName, string Body)
         {
             var twiml = new MessagingResponse();
