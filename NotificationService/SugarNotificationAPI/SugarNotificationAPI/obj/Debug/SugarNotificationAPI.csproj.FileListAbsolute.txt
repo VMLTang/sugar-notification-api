@@ -97,3 +97,10 @@ C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notificat
 C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\obj\Debug\SugarNotificationAPI.csproj.CopyComplete
 C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\obj\Debug\SugarNotificationAPI.dll
 C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\obj\Debug\SugarNotificationAPI.pdb
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\obj\Debug\SugarNotificationAPI.csprojAssemblyReference.cache
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Net.Http.Formatting.dll
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Web.Http.dll
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Web.Http.WebHost.dll
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Net.Http.Formatting.xml
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Web.Http.xml
+C:\Users\hdowning\source\repos\VMLHackMidwestNotificationService\sugar-notification-api\NotificationService\SugarNotificationAPI\SugarNotificationAPI\bin\System.Web.Http.WebHost.xml

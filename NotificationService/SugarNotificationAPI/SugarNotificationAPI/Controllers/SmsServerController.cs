@@ -102,12 +102,12 @@ namespace SugarNotificationAPI.Controllers
 
         // POST: SmsServer/Verify
         [HttpPost]
-        public ActionResult Verify(string PhoneNumber)
+        public ActionResult Verify(VerifyModel request)
         {
             var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(PhoneNumber, "Welcome to Shugar! Reply 'VERIFY' to confirm this number.");
+            var messageResource = twilioManager.SendSmsMessage(request.PhoneNumber, "Welcome to Shugar! Reply 'VERIFY' to confirm this number.");
 
-            return Content("Verification message sent to " + PhoneNumber + ". SID: " + messageResource.Sid);
+            return Content("Verification message sent to " + request.PhoneNumber + ". SID: " + messageResource.Sid);
         }
 
         // POST: SmsServer/Message
