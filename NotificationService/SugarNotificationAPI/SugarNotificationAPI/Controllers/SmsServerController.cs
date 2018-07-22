@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using System.Configuration;
-using Twilio;
-using Twilio.AspNet.Mvc;
-using Twilio.TwiML;
-using Twilio.Rest.Api.V2010.Account;
 using SugarNotificationAPI.Helpers;
-using System.Threading.Tasks;
 using SugarNotificationAPI.Models;
 
 namespace SugarNotificationAPI.Controllers
@@ -23,6 +14,29 @@ namespace SugarNotificationAPI.Controllers
             string messageBody = "This is a test message";
 
             var messageResource = twilioManager.SendSmsMessage(userNumber, messageBody);
+
+            return Content(messageResource.Sid);
+        }
+
+        // POST: SmsServer/ConsumerOfferSelected
+        [HttpPost]
+        public ActionResult ConsumerOfferSelected(ConsumerOfferSelectedModel request)
+        {
+            var twilioManager = new TwilioManager();
+            var messageResource = twilioManager.SendSmsMessage(request.ConsumerPhoneNumber,
+                "Thanks being interested in the offer! Just waiting for " + request.ProducerName + " to accept and set a meeting time and place.");
+
+            return Content(messageResource.Sid);
+        }
+
+        // POST: SmsServer/ProducerOfferSelected
+        [HttpPost]
+        public ActionResult ProducerOfferSelected(ProducerOfferSelectedModel request)
+        {
+            var twilioManager = new TwilioManager();
+            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                "Hey " + request.ProducerName + "! " + request.ConsumerName + 
+                " is interested in your offer! Click here to review and accept: " + request.OfferUrl);
 
             return Content(messageResource.Sid);
         }
