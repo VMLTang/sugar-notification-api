@@ -172,6 +172,11 @@
     <Compile Include="Helpers\TwilioManager.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Models\BroadcastRequestModel.cs" />
+    <Compile Include="Models\ConsumerRequestAcceptedModel.cs" />
+    <Compile Include="Models\GenericMessageModel.cs" />
+    <Compile Include="Models\ProducerMeetupChangeRequestByConsumerModel.cs" />
+    <Compile Include="Models\ProducerRequestAcceptedModel.cs" />
+    <Compile Include="Models\ProucerMeetupConfirmedModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

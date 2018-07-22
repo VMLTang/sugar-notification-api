@@ -29,12 +29,12 @@ namespace SugarNotificationAPI.Controllers
 
         // POST: SmsServer/ConsumerRequestAccepted
         [HttpPost]
-        public ActionResult ConsumerRequestAccepted(string ConsumerPhoneNumber, string ProducerName, string Time, string Place)
+        public ActionResult ConsumerRequestAccepted(ConsumerRequestAcceptedModel request)
         {
             var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(ConsumerPhoneNumber,
-                "Great news! " + ProducerName + 
-                " accepted your request. To pick up, meet at " + Time + " at " + Place + 
+            var messageResource = twilioManager.SendSmsMessage(request.ConsumerPhoneNumber,
+                "Great news! " + request.ProducerName + 
+                " accepted your request. To pick up, meet at " + request.Time + " at " + request.Place + 
                 ". If this works for you, reply CONFIRM. If not, reply CHANGE.") ;
 
             return Content(messageResource.Sid);
@@ -42,32 +42,32 @@ namespace SugarNotificationAPI.Controllers
 
         // POST: SmsServer/ProducerMeetupChangeRequestByConsumer
         [HttpPost]
-        public ActionResult ProducerMeetupChangeRequestByConsumer(string ProducerPhoneNumber, string ConsumerName, string RequestUrl)
+        public ActionResult ProducerMeetupChangeRequestByConsumer(ProducerMeetupChangeRequestByConsumerModel request)
         {
             var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(ProducerPhoneNumber,
-                ConsumerName + " would like to revise the meet up. Click here to view and confirm: " + RequestUrl);
+            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                request.ConsumerName + " would like to revise the meet up. Click here to view and confirm: " + request.RequestUrl);
 
             return Content(messageResource.Sid);
         }
 
         // POST: SmsServer/ProducerMeetupConfirmed
         [HttpPost]
-        public ActionResult ProducerMeetupConfirmed(string ProducerPhoneNumber, string ConsumerName, string Time, string Place)
+        public ActionResult ProducerMeetupConfirmed(ProducerMeetupConfirmedModel request)
         {
             var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(ProducerPhoneNumber,
-                ConsumerName + " has confirmed and will see you at " + Time + " at " + Place + ".");
+            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber,
+                request.ConsumerName + " has confirmed and will see you at " + request.Time + " at " + request.Place + ".");
 
             return Content(messageResource.Sid);
         }
 
         // POST: SmsServer/ProducerRequestAccepted
         [HttpPost]
-        public ActionResult ProducerRequestAccepted(string ProducerPhoneNumber, string ConsumerName)
+        public ActionResult ProducerRequestAccepted(ProducerRequestAcceptedModel request)
         {
             var twilioManager = new TwilioManager();
-            var messageResource = twilioManager.SendSmsMessage(ProducerPhoneNumber, "Thanks for offering to help! Just waiting for a confirmation from " + ConsumerName + ".");
+            var messageResource = twilioManager.SendSmsMessage(request.ProducerPhoneNumber, "Thanks for offering to help! Just waiting for a confirmation from " + request.ConsumerName + ".");
 
             return Content(messageResource.Sid);
         }
@@ -98,16 +98,16 @@ namespace SugarNotificationAPI.Controllers
 
         // POST: SmsServer/Message
         [HttpPost]
-        public ActionResult Message(string ToPhoneNumber, string UserDisplayName, string MessageBody)
+        public ActionResult Message(GenericMessageModel request)
         {
             var twilioManager = new TwilioManager();
             //Future Call TODO:
             //var userManager = new UserManager();
             //var user = userManager.GetUserByPhoneNumberAsync(From);
 
-            var message = "Hey " + UserDisplayName + "! " + MessageBody;
+            var message = "Hey " + request.UserDisplayName + "! " + request.MessageBody;
 
-            var messageResource = twilioManager.SendSmsMessage(ToPhoneNumber, message);
+            var messageResource = twilioManager.SendSmsMessage(request.ToPhoneNumber, message);
 
             return Content(messageResource.Sid);
         }
